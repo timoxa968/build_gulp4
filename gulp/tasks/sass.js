@@ -9,7 +9,7 @@ module.exports = function () {
             // .pipe($.gp.csso())
             .pipe($.gp.sass({ outputStyle: 'expanded' }))
             .pipe($.gp.autoprefixer({
-                browsers: ['last 10 versions']
+              overrideBrowserslist: ['last 2 versions']
             }))
             // .pipe($.gp.sourcemaps.write('./'))
             .pipe($.gulp.dest('build/css/'))
