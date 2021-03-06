@@ -4,8 +4,9 @@ fetch('http://api.openweathermap.org/data/2.5/find?lat=55.5&lon=37.5&cnt=10&appi
   .then(response => response.json())
   .then(result => console.log(result))
   .catch(function(){
+  });
 
-});
+
 function geoFindMe() {
 
   const status = document.querySelector('#status');
