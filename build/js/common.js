@@ -1,26 +1,36 @@
 'use strict'
 
-fetch('http://api.openweathermap.org/data/2.5/find?lat=55.5&lon=37.5&cnt=10&appid=573ae8357276b34fac4061b4b853dd26')
-  .then(response => response.json())
-  .then(result => console.log(result))
-  .catch(function(){
 
-});
+
+
+
+
 function geoFindMe() {
 
   const status = document.querySelector('#status');
-  const mapLink = document.querySelector('#map-link');
 
-  mapLink.href = '';
-  mapLink.textContent = '';
 
   function success(position) {
+
     const latitude  = position.coords.latitude;
     const longitude = position.coords.longitude;
 
     status.textContent = '';
-    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-    mapLink.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
+
+    fetch(`http://api.openweathermap.org/data/2.5/find?lat=${latitude.toFixed(3)}&lon=${longitude.toFixed(3)}&cnt=20&appid=573ae8357276b34fac4061b4b853dd26`)
+    .then(function (response){
+      return response.json();
+    })
+    .then(function (result){
+      console.log(result.list)
+      let a1 = '';
+      for (let i = 0; i < result.list.length; i++) {
+        a1 += `<div class="alert alert-success" role="alert">Город - ${result.list[i].name}, температура - ${Math.round(result.list[i].main.temp - 273)};</div>`;
+      }
+      document.querySelector('.selected-list').innerHTML = a1;
+    })
+    .catch(function(){
+    });
   }
 
   function error() {
@@ -37,7 +47,3 @@ function geoFindMe() {
 }
 
 document.querySelector('#find-me').addEventListener('click', geoFindMe);
-
-$(document).ready(function () {
-    // alert(1);
-});
